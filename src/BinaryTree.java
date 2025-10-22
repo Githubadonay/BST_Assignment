@@ -1,6 +1,7 @@
 public class BinaryTree {
     // Root of BST
     Node root;
+    private int size = 0;
 
     // Constructor
     BinaryTree() {
@@ -11,11 +12,11 @@ public class BinaryTree {
 
     // find and return the minimum key of the tree
     public int findMin() {
-        Node temp = root;
-        while (temp.leftChild()) {
-            temp = temp.getLeft();
+        Node Current = root;
+        while (Current.getLeft() != null) {
+            Current = Current.getLeft();
         }
-        return temp.getKey();
+        return Current.getKey();
     }
 
     public int leftChild(Node p) {
@@ -27,31 +28,71 @@ public class BinaryTree {
     }
 
     // find and return the maximum key of the tree
+    // Checks the Max by checking all the right items until its null, once its at
+    // the end of the right side it stops declaring it as max
     public int findMax() {
-        return 0;
+        Node Current = root;
+        while (Current.getRight() != null) {
+            Current = Current.getRight();
+        }
+        return Current.getKey();
     }
 
     // Tests if the list is empty. return true if Tree is empty; else false
     public boolean isEmpty() {
-        return true;
+        return root == null;
     }
 
     // Returns the number of elements in the tree
     public int size() {
-        return 0;
+        return size;
     }
 
     // print tree nodes in an inorder traversal
     public void diplayInOrder() {
+        if (root != null) {
+            inOrder(root);
+        }
+    }
 
+    // L/Ro/Ri
+    public void inOrder(Node root) {
+        if (root != null) {
+            inOrder(root.getLeft());
+            System.out.println(root.getKey());
+            inOrder(root.getRight());
+        }
     }
 
     public void diplayPreOrder() {
+        if (root != null) {
+            preOrder(root);
+        }
+    }
 
+    // Ro/L/Ri
+    public void preOrder(Node root) {
+        if (root != null) {
+            System.out.println(root.getKey());
+            preOrder(root.getLeft());
+            preOrder(root.getRight());
+        }
     }
 
     public void diplayPostOrder() {
+        if (root != null) {
+            postOrder(root);
+        }
+    }
 
+    // L/Ri/Ro
+    public void postOrder(Node root) {
+        if (root != null) {
+            postOrder(root.getLeft());
+            postOrder(root.getRight());
+            System.out.println(root.getKey());
+
+        }
     }
 
     private class Node {
@@ -62,14 +103,14 @@ public class BinaryTree {
 
         private Node(int data) {
             this.key = data;
-            left = right = null;
+            this.left = this.right = null;
         }
 
         public Node getLeft() {
             return this.left;
         }
 
-        public Node RightChild() {
+        public Node getRight() {
             return this.right;
         }
 
@@ -80,9 +121,11 @@ public class BinaryTree {
         public void setLeft(Node left) {
             this.left = left;
         }
+
         public void setRight(Node right) {
             this.right = right;
         }
+
         public void setKey(int key) {
             this.key = key;
         }
