@@ -19,6 +19,12 @@ public class BinaryTree {
         return Current.getKey();
     }
 
+    public Node addNode(int key){
+        Node current = new Node(key);
+        size++;
+        return current;
+    }
+
     public int leftChild(Node p) {
         return 0;
     }
@@ -95,7 +101,7 @@ public class BinaryTree {
         }
     }
 
-    private class Node {
+    class Node {
 
         private Node left;
         private Node right;
