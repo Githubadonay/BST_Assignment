@@ -6,8 +6,7 @@ public class BinaryTree {
     // Constructor
     BinaryTree() {
         root = null;
-        size = 0;
-    }
+        }
 
     /* A recursive function to insert a new node in BST */
 
@@ -72,7 +71,7 @@ public class BinaryTree {
     public void inOrder(Node root) {
         if (root != null) {
             inOrder(root.getLeft());
-            System.out.println(root.getKey());
+            System.out.print(root.getKey()+ " ");
             inOrder(root.getRight());
         }
     }
@@ -86,7 +85,7 @@ public class BinaryTree {
     // Ro/L/Ri
     public void preOrder(Node root) {
         if (root != null) {
-            System.out.println(root.getKey());
+            System.out.print(root.getKey()+ " ");
             preOrder(root.getLeft());
             preOrder(root.getRight());
         }
@@ -103,7 +102,7 @@ public class BinaryTree {
         if (root != null) {
             postOrder(root.getLeft());
             postOrder(root.getRight());
-            System.out.println(root.getKey());
+            System.out.print(root.getKey()+ " ");
 
         }
     }

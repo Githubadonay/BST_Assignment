@@ -5,19 +5,29 @@ public class BinarySearchTree extends BinaryTree {
             root = addNode(key);
             return key;
         }
-        return addBSTNode(root, key);
+        addBSTNode(root, key);
+        return key;
     }
 
-    public int addBSTNode(Node root, int key) {
+    private void addBSTNode(Node root, int key) {
         if (root.getKey() == key)
-            throw new IllegalStateException("Number, already exists!!");
-        if (root.getKey() > key) {
-            root.setLeft(addNode(key));
-        } else {
-            root.setRight(addNode(key));
-        }
-        return key;
+            throw new IllegalStateException("Number already exists!!");
 
+        if (key < root.getKey()) {
+            // Go left
+            if (root.getLeft() == null) {
+                root.setLeft(addNode(key));
+            } else {
+                addBSTNode(root.getLeft(), key);
+            }
+        } else {
+            // Go right
+            if (root.getRight() == null) {
+                root.setRight(addNode(key));
+            } else {
+                addBSTNode(root.getRight(), key);
+            }
+        }
     }
 
     // delete a node from the BST. Implement all the three cases for deletion.
@@ -37,8 +47,8 @@ public class BinarySearchTree extends BinaryTree {
         } else if (key > root.getKey()) {
             root.setRight(removeBSTNode(root.getRight(), key));
         } else {
-            // Key found - node needs to be deleted
-            // Case 1: node with no child or Case 2: node with only one child
+            // Key is equal to root's key and node needs to be deleted
+            // Case 1: node with only one child or Case 2: no child
             if (root.getLeft() == null) {
                 size--;
                 return root.getRight();
@@ -46,18 +56,17 @@ public class BinarySearchTree extends BinaryTree {
                 size--;
                 return root.getLeft();
             }
-            
-            // Case 3: Node with two children
-            // Find minimum in right subtree (successor)
+
+            // Case 3: Node with two children, find minimum on right subtree
             Node minNode = findMinNode(root.getRight());
             root.setKey(minNode.getKey());
-            
+
             // Delete the successor
             root.setRight(removeBSTNode(root.getRight(), root.getKey()));
         }
         return root;
     }
-    
+
     private Node findMinNode(Node node) {
         Node current = node;
         while (current.getLeft() != null) {
@@ -69,12 +78,16 @@ public class BinarySearchTree extends BinaryTree {
     // search for a node with a key k. return the key if found; else throw an
     // exeption
     public int search(int key) {
-        if (root == null)
-            throw new IllegalStateException("Number, already exists!!");
+        if (root == null) {
+            throw new IllegalStateException("Key: " + key + " not found in the tree");
+        }
         return searchNode(root, key);
     }
 
     private int searchNode(Node root, int key) {
+        if (root == null) {
+            throw new IllegalStateException("Key: " + key + " not found in the tree");
+        }
         if (key < root.getKey()) {
             return searchNode(root.getLeft(), key);
         } else if (key > root.getKey()) {
