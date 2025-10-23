@@ -1,11 +1,12 @@
 public class BinaryTree {
     // Root of BST
     Node root;
-    private int size = 0;
+    int size = 0;
 
     // Constructor
     BinaryTree() {
         root = null;
+        size = 0;
     }
 
     /* A recursive function to insert a new node in BST */
@@ -26,11 +27,17 @@ public class BinaryTree {
     }
 
     public int leftChild(Node p) {
-        return 0;
+        if (p == null || p.left == null) {
+            throw new IllegalStateException("No left child found!!!");
+        }
+        return p.left.key;
     }
 
     public int rightChild(Node p) {
-        return 0;
+        if (p == null || p.right == null) {
+            throw new IllegalStateException("No Right child found!!!");
+        }
+        return p.right.key;
     }
 
     // find and return the maximum key of the tree
